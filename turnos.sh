@@ -25,7 +25,7 @@ SSO=$(curl --path-as-is -i -s -k -c $SSO_FILE -X $'GET' --get \
     "https://www.diversioncolsubsidio.com/sistema.php/default/loguearSitio")
 
 #echo $SSO
-COOKIE=$(cat $SSO_FILE | tail -1 | egrep -o "([0-9a-z]+)$")
+COOKIE=$(cat $SSO_FILE | tail -1 | grep -Eo "([0-9a-z]+)$")
 rm $SSO_FILE 2> /dev/null
 
 #echo "Cookie: $COOKIE"
