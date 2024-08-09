@@ -1,6 +1,8 @@
 #!/bin/bash
-CEDULA=$(cat config.json | jq .cedula --raw-output)
-LOL=$(cat config.json | jq .lol --raw-output)
+CONFIG_FILE="$(dirname $0)/config.json"
+
+CEDULA=$(cat $CONFIG_FILE | jq .cedula --raw-output)
+LOL=$(cat $CONFIG_FILE | jq .lol --raw-output)
 
 LOGIN=$(curl --path-as-is -s -k -X 'POST' \
     -H 'Host: www.colsubsidio.com' -H 'Content-Type: application/json' \
@@ -11,7 +13,7 @@ LOGIN=$(curl --path-as-is -s -k -X 'POST' \
 TOKEN=$(echo -n $LOGIN | jq .data.tokenId --raw-output)
 #echo "TOKEN: $TOKEN"
 
-SSO_FILE="cookie.txt"
+SSO_FILE="$(dirname $0)/cookie.txt"
 SSO=$(curl --path-as-is -i -s -k -c $SSO_FILE -X $'GET' --get \
     -H $'Host: www.diversioncolsubsidio.com' \
     -H $'User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:128.0) Gecko/20100101 Firefox/128.0' \
